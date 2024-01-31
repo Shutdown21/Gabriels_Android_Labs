@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             model.editString.postValue(variableBinding.myedittext.getText().toString());
         });
         model.editString.observe(this, s -> {
-            variableBinding.textview.setText("Your edit text has: " + model.editString);
+            variableBinding.textview.setText("Your edit text is: " + s);
         });
         model.isSelected.observe(this, seleceted ->{
             variableBinding.checkbox.setChecked(seleceted);
