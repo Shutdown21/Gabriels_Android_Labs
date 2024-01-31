@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
         model.editString.observe(this, s -> {
             variableBinding.textview.setText("Your edit text is: " + s);
         });
-        model.isSelected.observe(this, seleceted ->{
-            variableBinding.checkbox.setChecked(seleceted);
-            variableBinding.radio.setChecked(seleceted);
-            variableBinding.swicth.setChecked(seleceted);
+        model.isSelected.observe(this, selected ->{
+            variableBinding.checkbox.setChecked(selected);
+            variableBinding.radio.setChecked(selected);
+            variableBinding.swicth.setChecked(selected);
         });
 
         variableBinding.checkbox.setOnCheckedChangeListener((btn, isChecked) ->{
