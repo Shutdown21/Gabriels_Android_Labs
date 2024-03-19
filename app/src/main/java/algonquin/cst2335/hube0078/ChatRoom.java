@@ -60,14 +60,28 @@ public class ChatRoom extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.sendButton.setOnClickListener(click->{
-            messages.add(new ChatMessage(binding.textInput.getText().toString(),currentDateAndTime,true));
+            String messageText = binding.textInput.getText().toString();
+            ChatMessage message = new ChatMessage(messageText, currentDateAndTime, true);
+            messages.add(message);
             myAdapter.notifyItemInserted(messages.size()-1);
             binding.textInput.setText("");
+
+            Executor thread = Executors.newSingleThreadExecutor();
+            thread.execute(() -> {
+                mDAO.insertMessage(message);
+            });
         });
         binding.receiveButton.setOnClickListener(click->{
-            messages.add(new ChatMessage(binding.textInput.getText().toString(),currentDateAndTime,false));
+            String messageText = binding.textInput.getText().toString();
+            ChatMessage message = new ChatMessage(messageText, currentDateAndTime, false);
+            messages.add(message);
             myAdapter.notifyItemInserted(messages.size()-1);
             binding.textInput.setText("");
+
+            Executor thread = Executors.newSingleThreadExecutor();
+            thread.execute(() -> {
+                mDAO.insertMessage(message);
+            });
         });
 
         binding.recycleView.setAdapter(myAdapter = new RecyclerView.Adapter<MyRowHolder>() {
