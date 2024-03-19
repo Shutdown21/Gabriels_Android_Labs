@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -41,18 +43,44 @@ public class ChatRoom extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch( item.getItemId() )
-        {
-            case R.id.item_1:
+        TextView messageText;
 
-                //put your ChatMessage deletion code here. If you select this item, you should show the alert dialog
-                //asking if the user wants to delete this message.
-                break;
+        if (item.getItemId() == R.id.item_1) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(ChatRoom.this);
+            builder.setMessage("Do you want to delete all messages: ")
+                    .setTitle("Question:")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            int size = messages.size();
+                            messages.clear();
+                            myAdapter.notifyItemRangeRemoved(0, size);
+                        }
+
+                    })
+                    .setNegativeButton("No", (dialog, cl) -> {
+                    })
+                    .show();
+            return true;
         }
 
-        return true;
-    }
 
+        if (item.getItemId() == R.id.item_2) {
+            displayAboutToast();
+            return true;
+        }
+        //put your ChatMessage deletion code here. If you select this item, you should show the alert dialog
+        //asking if the user wants to delete this message.
+
+        return super.onOptionsItemSelected(item);
+    }
+    private void displayAboutToast() {
+        String version = "Version 1.0";
+        String creator = "Gabriel Hubert";
+        String message = version + ", created by " + creator;
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
